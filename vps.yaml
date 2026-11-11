@@ -1,0 +1,25 @@
+name: Cloud VPS 24/7
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */6 * * *'
+
+jobs:
+  vps:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+
+    steps:
+      - name: Загрузка репозитория
+        uses: actions/checkout@v4
+
+      - name: Подготовка системы
+        run: |
+          sudo apt-get update
+          echo "Сервер готов к работе!"
+
+      - name: Запуск доступа по SSH и Web
+        uses: mxschmitt/action-tmate@v3
+        with:
+          limit-access-to-actor: true
